@@ -8,16 +8,13 @@ const reducer = (state = initialState, action) => {
     case "ADD_FAV":
       return {
         ...state,
-        myFavorites: [...state.allCharactersFav, action.payload],
-        allCharactersFav: [...state.allCharactersFav, action.payload],
+        myFavorites: action.payload,
+        allCharactersFav: action.payload,
       };
+
     case "REMOVE_FAV":
-      return {
-        ...state,
-        myFavorites: state.myFavorites.filter((fav) => {
-          return fav.id !== action.payload;
-        }),
-      };
+      return { ...state,allCharactersFav : action.payload };
+
     case "FILTER":
       const allCharactersfilter = state.allCharactersFav.filter(
         (char) => char.gender === action.payload
@@ -27,13 +24,14 @@ const reducer = (state = initialState, action) => {
         myFavorites: allCharactersfilter,
       };
     case "ORDER":
-      const allCharactersFavcopy = action.payload === "A"
-      ? state.allCharactersFav.sort((a, b) => a.id - b.id)
-      : state.allCharactersFav.sort((a, b) => b.id - a.id);
+      const allCharactersFavcopy =
+        action.payload === "A"
+          ? state.allCharactersFav.sort((a, b) => a.id - b.id)
+          : state.allCharactersFav.sort((a, b) => b.id - a.id);
       return {
         ...state,
-        myFavorites:allCharactersFavcopy
-      }
+        myFavorites: allCharactersFavcopy,
+      };
     default:
       return { ...state };
   }

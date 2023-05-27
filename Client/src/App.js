@@ -8,8 +8,7 @@ import About from "./components/About/About";
 import Detail from "./components/Detail/Detail";
 import Form from "./components/Form/Form"
 import Favorites from "./components/Favorites/Favorites"
-const EMAIL = "xcl_xioma@hotmail.com"
-const PASSWORD = "liced.123"
+
 
 
 function App() {
@@ -19,14 +18,15 @@ function App() {
   const navigate =  useNavigate()
   const [access, setAccess] = useState(true )
   
-  const login = (userData) => {
-    {console.log(userData)}
-    if(userData.email===EMAIL && userData.password===PASSWORD){
-      setAccess(true)
-      navigate("/home")
-    }
-  }
-
+  function login(userData) {
+    const { email, password } = userData;
+    const URL = 'http://localhost:3001/rickandmorty/login/';
+    axios(URL + `?email=${email}&password=${password}`).then(({ data }) => {
+       const { access } = data;
+       setAccess(access);
+       access && navigate('/home');
+    });
+ }
 
   function onSearch(id) {
     if(characters.find((cha)=> cha.id.toString()===id)){
